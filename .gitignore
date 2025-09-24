@@ -9,6 +9,10 @@ target/
 .idea/jarRepositories.xml
 .idea/compiler.xml
 .idea/libraries/
+.idea/copilot.data.migration.edit.xml
+.idea/copilot.data.migration.agent.xml
+.idea/misc.xml
+.idea/remote-targets.xml
 *.iws
 *.iml
 *.ipr
