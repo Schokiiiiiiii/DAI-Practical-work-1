@@ -17,6 +17,12 @@ public class CsvSort implements Callable<Integer> {
 
     @Override
     public Integer call() {
+
+        if (columnName == null) {
+            System.err.println("Please specify the column name!");
+            return 1;
+        }
+
         System.out.println("Here is the column: " + columnName);
         return 0;
     }
