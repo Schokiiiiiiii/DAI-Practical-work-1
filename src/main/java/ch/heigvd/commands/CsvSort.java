@@ -12,18 +12,22 @@ public class CsvSort implements Callable<Integer> {
 
     @CommandLine.Option(
             names = {"-c", "--column"},
-            description = "The header of the column to sort.")
+            description = "The header of the column to sort.",
+            required = true)
     protected String columnName;
+
+    @CommandLine.Option(
+            names = {"-o", "--output"},
+            description = "The output filename. By default, it will be the input filename.")
+    protected String outputFilename;
 
     @Override
     public Integer call() {
 
-        if (columnName == null) {
-            System.err.println("Please specify the column name!");
-            return 1;
-        }
+        if (outputFilename == null) outputFilename = parent.getCSVFilename();
 
         System.out.println("Here is the column: " + columnName);
+
         return 0;
     }
 }
