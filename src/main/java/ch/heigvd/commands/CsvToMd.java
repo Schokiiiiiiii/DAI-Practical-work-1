@@ -1,12 +1,12 @@
 package ch.heigvd.commands;
 
-import com.sun.tools.javac.Main;
+import ch.heigvd.Main;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
 import java.util.concurrent.Callable;
 
-@Command(name = "foo", description = "Convert a CSV file to a MARKDOWN table")
+@Command(name = "csvtomd", description = "Convert a CSV file to a MARKDOWN table")
 public class CsvToMd implements Callable<Integer> {
     @CommandLine.ParentCommand protected Main parent;
 
