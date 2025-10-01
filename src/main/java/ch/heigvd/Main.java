@@ -26,6 +26,14 @@ import java.io.File;
         mixinStandardHelpOptions = true)
 public class Main {
 
+    @CommandLine.Parameters(
+            index = "0",
+            description = "The name of the file."
+    )
+    protected String filename;
+
+    public String getCSVFilename() { return filename; }
+
     /**
      * main that starts the right command following arguments given
      * @param args parameters for picocli
