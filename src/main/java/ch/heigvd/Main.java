@@ -29,6 +29,7 @@ public class Main {
     @CommandLine.Option(
             names = {"-i", "--input"},
             paramLabel = "CSV_FILE",
+            required = true,
             description = "The name of the input .csv file"
     )
     protected String filename;
