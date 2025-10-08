@@ -26,9 +26,11 @@ import java.io.File;
         mixinStandardHelpOptions = true)
 public class Main {
 
-    @CommandLine.Parameters(
-            index = "0",
-            description = "The name of the file."
+    @CommandLine.Option(
+            names = {"-i", "--input"},
+            paramLabel = "CSV_FILE",
+            required = true,
+            description = "The name of the input .csv file"
     )
     protected String filename;
 
