@@ -20,6 +20,9 @@ public class CsvToMd implements Callable<Integer> {
     )
     protected String outputFilename;
 
+    protected char CSV_SEPARATOR = ',';
+    protected char MD_SEPARATOR = '|';
+
     @Override
     public Integer call() {
         importCSV(parent.getCSVFilename());
@@ -38,7 +41,7 @@ public class CsvToMd implements Callable<Integer> {
         try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filename), StandardCharsets.UTF_8))){
             String line;
             while ((line = br.readLine()) != null) {
-                csvLines.add(line + END_OF_LINE);
+                csvLines.add(line);
             }
         }catch(IOException e){
             System.out.println("Error: " + e.getMessage());
@@ -65,19 +68,25 @@ public class CsvToMd implements Callable<Integer> {
     private int buildMdHeader(){
         int nbColumns = 0;
         boolean inQuotes = false;
-
         String header = csvLines.getFirst();
-        for(int i = 0; i < header.length(); ++i){
-            if(header.charAt(i) == '"'){
-                inQuotes = !inQuotes;
-            }
 
-            if(header.charAt(i) == ',' && !inQuotes){
-                header = header.substring(0, i) + " | " + header.substring(i+1);
+        StringBuilder sb = new StringBuilder();
+        sb.append(MD_SEPARATOR);
+
+        for(int i = 0; i < header.length(); ++i){
+            char c = header.charAt(i);
+
+            if(c == '"') inQuotes = !inQuotes;
+            if(c == CSV_SEPARATOR && !inQuotes){
+                sb.append(MD_SEPARATOR);
                 ++nbColumns;
+            }else{
+                sb.append(c);
             }
         }
-        mdLines.add(header);
+
+        sb.append(MD_SEPARATOR).append(END_OF_LINE);
+        mdLines.add(sb.toString());
 
         return nbColumns + 1;
     }
@@ -93,22 +102,28 @@ public class CsvToMd implements Callable<Integer> {
         for(int i = 1; i < csvLines.size(); ++i) {
             String line = csvLines.get(i);
 
+            StringBuilder sb = new StringBuilder();
+            sb.append(MD_SEPARATOR);
+
             int currentColumn = 1;
 
             for (int j = 0; j < line.length(); ++j) {
-
-                if(line.charAt(j) == '"'){
+                char c = line.charAt(j);
+                if(c == '"'){
                     inQuotes = !inQuotes;
                 }
 
-                if (line.charAt(j) == ',' && !inQuotes) {
+                if (c == CSV_SEPARATOR && !inQuotes) {
                     ++currentColumn;
                     if (currentColumn > nbColumns)
                         break;
-                    line = line.substring(0, j) + "|" + line.substring(j + 1) + "|" + END_OF_LINE;
+                    sb.append(MD_SEPARATOR);
+                }else{
+                    sb.append(c);
                 }
             }
-            mdLines.add(line);
+            sb.append(MD_SEPARATOR).append(END_OF_LINE);
+            mdLines.add(sb.toString());
         }
     }
 }
