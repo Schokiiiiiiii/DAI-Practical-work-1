@@ -13,8 +13,6 @@ import java.util.concurrent.Callable;
 @CommandLine.Command(name = "csvsort", description = "Sorts a CSV file based on a column")
 public class CsvSort implements Callable<Integer> {
 
-    private final char SEPARATOR = ',';
-
     @CommandLine.ParentCommand protected Main parent;
 
     @CommandLine.Option(
@@ -28,12 +26,16 @@ public class CsvSort implements Callable<Integer> {
             description = "The output filename. By default, it will be the input filename.")
     protected String outputFilename;
 
+    private char separator;
+
+
     /**
      * sorts a csv file based on a column
      * @return 0 if it went well, 1 otherwise
      */
     @Override
     public Integer call() {
+        separator = parent.getCSVSeparator();
 
         // if no output filename -> same as input filename
         if (outputFilename == null) outputFilename = parent.getCSVFilename();
@@ -83,7 +85,7 @@ public class CsvSort implements Callable<Integer> {
 
             // loop over each separator
             int sep;
-            while ((sep = line.indexOf(SEPARATOR)) != -1) {
+            while ((sep = line.indexOf(separator)) != -1) {
 
                 // if there is a '"', fix the separator in case it was wrong
                 if (line.charAt(0) == '"') {
@@ -130,7 +132,7 @@ public class CsvSort implements Callable<Integer> {
 
                 // loop over each separator
                 int sep;
-                while ((sep = line.indexOf(SEPARATOR)) != -1) {
+                while ((sep = line.indexOf(separator)) != -1) {
 
                     // if there is a '"', fix the separator in case it was wrong
                     if (line.charAt(0) == '"') {
