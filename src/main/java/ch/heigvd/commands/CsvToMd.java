@@ -59,7 +59,7 @@ public class CsvToMd implements Callable<Integer> {
     private void convertCSVtoMD(){
         int nbColumns = buildMdHeader();
         buildMdHeaderSeparator(nbColumns);
-        buildMdBody();
+        buildMdBody(nbColumns);
     }
 
     private int buildMdHeader(){
@@ -87,11 +87,14 @@ public class CsvToMd implements Callable<Integer> {
         mdLines.add(headerSeparator);
     }
 
-    private void buildMdBody(){
+    private void buildMdBody(int nbColumns){
         boolean inQuotes = false;
 
         for(int i = 1; i < csvLines.size(); ++i) {
             String line = csvLines.get(i);
+
+            int currentColumn = 1;
+
             for (int j = 0; j < line.length(); ++j) {
 
                 if(line.charAt(j) == '"'){
@@ -99,7 +102,10 @@ public class CsvToMd implements Callable<Integer> {
                 }
 
                 if (line.charAt(j) == ',' && !inQuotes) {
-                    line = line.substring(0, j) + " | " + line.substring(j + 1);
+                    ++currentColumn;
+                    if (currentColumn > nbColumns)
+                        break;
+                    line = line.substring(0, j) + "|" + line.substring(j + 1) + "|" + END_OF_LINE;
                 }
             }
             mdLines.add(line);
