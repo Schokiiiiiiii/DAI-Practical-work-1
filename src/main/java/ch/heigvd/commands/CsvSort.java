@@ -26,7 +26,7 @@ public class CsvSort implements Callable<Integer> {
             description = "The output filename. By default, it will be the input filename.")
     protected String outputFilename;
 
-    private char SEPARATOR;
+    private char separator;
 
 
     /**
@@ -35,7 +35,7 @@ public class CsvSort implements Callable<Integer> {
      */
     @Override
     public Integer call() {
-        SEPARATOR = parent.getCSVSeparator();
+        separator = parent.getCSVSeparator();
 
         // if no output filename -> same as input filename
         if (outputFilename == null) outputFilename = parent.getCSVFilename();
@@ -85,7 +85,7 @@ public class CsvSort implements Callable<Integer> {
 
             // loop over each separator
             int sep;
-            while ((sep = line.indexOf(SEPARATOR)) != -1) {
+            while ((sep = line.indexOf(separator)) != -1) {
 
                 // if there is a '"', fix the separator in case it was wrong
                 if (line.charAt(0) == '"') {
@@ -132,7 +132,7 @@ public class CsvSort implements Callable<Integer> {
 
                 // loop over each separator
                 int sep;
-                while ((sep = line.indexOf(SEPARATOR)) != -1) {
+                while ((sep = line.indexOf(separator)) != -1) {
 
                     // if there is a '"', fix the separator in case it was wrong
                     if (line.charAt(0) == '"') {

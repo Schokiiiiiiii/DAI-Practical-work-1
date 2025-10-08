@@ -22,11 +22,11 @@ public class CsvToMd implements Callable<Integer> {
 
     protected char MD_SEPARATOR = '|';
 
-    private char CSV_SEPARATOR;
+    private char csvSeparator;
 
     @Override
     public Integer call() {
-        CSV_SEPARATOR = parent.getCSVSeparator();
+        csvSeparator = parent.getCSVSeparator();
 
         importCSV(parent.getCSVFilename());
         convertCSVtoMD();
@@ -80,7 +80,7 @@ public class CsvToMd implements Callable<Integer> {
             char c = header.charAt(i);
 
             if(c == '"') inQuotes = !inQuotes;
-            if(c == CSV_SEPARATOR && !inQuotes){
+            if(c == csvSeparator && !inQuotes){
                 sb.append(MD_SEPARATOR);
                 ++nbColumns;
             }else{
@@ -116,7 +116,7 @@ public class CsvToMd implements Callable<Integer> {
                     inQuotes = !inQuotes;
                 }
 
-                if (c == CSV_SEPARATOR && !inQuotes) {
+                if (c == csvSeparator && !inQuotes) {
                     ++currentColumn;
                     if (currentColumn > nbColumns)
                         break;

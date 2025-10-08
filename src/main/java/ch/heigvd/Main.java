@@ -40,10 +40,10 @@ public class Main {
             description = "The separator character of the CSV file.",
             defaultValue = ","
     )
-    protected char CSV_SEPARATOR;
+    protected char csvSeparator;
 
     public String getCSVFilename() { return filename; }
-    public char getCSVSeparator() { return CSV_SEPARATOR; }
+    public char getCSVSeparator() { return csvSeparator; }
 
     /**
      * main that starts the right command following arguments given
