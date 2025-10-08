@@ -34,7 +34,16 @@ public class Main {
     )
     protected String filename;
 
+    @CommandLine.Option(
+            names = {"-s", "--separator"},
+            paramLabel = "SEPARATOR_CHARACTER",
+            description = "The separator character of the CSV file.",
+            defaultValue = ","
+    )
+    protected char CSV_SEPARATOR;
+
     public String getCSVFilename() { return filename; }
+    public char getCSVSeparator() { return CSV_SEPARATOR; }
 
     /**
      * main that starts the right command following arguments given

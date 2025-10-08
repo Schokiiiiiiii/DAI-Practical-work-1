@@ -20,11 +20,14 @@ public class CsvToMd implements Callable<Integer> {
     )
     protected String outputFilename;
 
-    protected char CSV_SEPARATOR = ',';
     protected char MD_SEPARATOR = '|';
+
+    private char CSV_SEPARATOR;
 
     @Override
     public Integer call() {
+        CSV_SEPARATOR = parent.getCSVSeparator();
+
         importCSV(parent.getCSVFilename());
         convertCSVtoMD();
         exportMD(outputFilename == null ? parent.getCSVFilename() + ".md" : outputFilename);
