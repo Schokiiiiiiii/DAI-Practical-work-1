@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.concurrent.Callable;
 
 @CommandLine.Command(name = "csvsort", description = "Sorts a CSV file based on a column")
@@ -50,6 +51,10 @@ public class CsvSort implements Callable<Integer> {
         // initialize data 2d array and retrieve the csv data
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         retrieveData(data);
+
+        // sort data using custom comparator to chose index
+        data.subList(1, data.size())
+                .sort(Comparator.comparing(o -> o.get(idx)));
 
         // TODO : remove show the variables for debugging
         for (ArrayList<String> datum : data) {
