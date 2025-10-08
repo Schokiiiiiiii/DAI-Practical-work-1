@@ -3,10 +3,7 @@ package ch.heigvd.commands;
 import ch.heigvd.Main;
 import picocli.CommandLine;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.concurrent.Callable;
@@ -28,7 +25,6 @@ public class CsvSort implements Callable<Integer> {
     protected String outputFilename;
 
     private char separator;
-
 
     /**
      * sorts a csv file based on a column
@@ -56,16 +52,8 @@ public class CsvSort implements Callable<Integer> {
         data.subList(1, data.size())
                 .sort(Comparator.comparing(o -> o.get(idx)));
 
-        // TODO : remove show the variables for debugging
-        for (ArrayList<String> datum : data) {
-            System.out.print('|');
-            for (String s : datum) {
-                System.out.print(s + '|');
-            }
-            System.out.println();
-        }
-        System.out.println("Here is the column : " + columnName);
-        System.out.println("Here is the index  : " + idx);
+        // write data to output file
+        writeToCSV(data);
 
         return 0;
     }
@@ -159,6 +147,33 @@ public class CsvSort implements Callable<Integer> {
 
         } catch (IOException e) {
             System.out.println("Error with the csv input file: " + e.getMessage());
+        }
+    }
+
+    /**
+     * writes a 2d ArrayList inside a CSV file
+     * @param data 2d ArrayList to write
+     */
+    private void writeToCSV(ArrayList<ArrayList<String>> data) {
+
+        // open file to write
+        try (Writer writer = new FileWriter(outputFilename);
+             BufferedWriter bw = new BufferedWriter(writer)) {
+
+            // write line by line, word by word
+            for (ArrayList<String> datum : data) {
+                for (int i = 0; i < datum.size(); i++) {
+                    if (i != 0) bw.write(separator);
+                    bw.write(datum.get(i));
+                }
+                bw.write('\n');
+            }
+
+            // flush what is left inside the buffer
+            bw.flush();
+
+        } catch (IOException e) {
+            System.out.println("Error with the csv output file: " + e.getMessage());
         }
     }
 }
