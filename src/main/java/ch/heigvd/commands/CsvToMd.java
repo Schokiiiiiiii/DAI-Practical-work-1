@@ -13,11 +13,14 @@ import java.util.concurrent.Callable;
 public class CsvToMd implements Callable<Integer> {
     @CommandLine.ParentCommand protected Main parent;
 
+    @CommandLine.Option(names = {"-o", "--output"}, description = "The output filename. By default, it will be the input filename.")
+    protected String outputFilename;
+
     @Override
     public Integer call() {
         importCSV(parent.getCSVFilename());
         convertCSVtoMD();
-        exportMD(/*parent.getOutputFilename*/"/home/samuel/DAI/DAI-Practical-work-1/data/dataToMd.md");
+        exportMD(outputFilename == null ? parent.getCSVFilename() + ".md" : outputFilename);
         return 0;
     }
 
@@ -49,20 +52,27 @@ public class CsvToMd implements Callable<Integer> {
     }
 
     private void convertCSVtoMD(){
-        buildMdHeader();
-        int nbColumns = csvLines.getFirst().split(",").length;
+        int nbColumns = buildMdHeader();
         buildMdHeaderSeparator(nbColumns);
         buildMdBody();
     }
 
-    private void buildMdHeader(){
+    private int buildMdHeader(){
+        int nbColumns = 0;
+        boolean inQuotes = false;
         String header = csvLines.getFirst();
         for(int i = 0; i < header.length(); ++i){
-            if(header.charAt(i) == ','){
+            if(header.charAt(i) == '"'){
+                inQuotes = !inQuotes;
+            }
+            if(header.charAt(i) == ',' && !inQuotes){
                 header = header.substring(0, i) + " | " + header.substring(i+1);
+                ++nbColumns;
             }
         }
         mdLines.add(header);
+
+        return nbColumns + 1;
     }
 
     private void buildMdHeaderSeparator(int nbColumns){
@@ -71,10 +81,17 @@ public class CsvToMd implements Callable<Integer> {
     }
 
     private void buildMdBody(){
+        boolean inQuotes = false;
+
         for(int i = 1; i < csvLines.size(); ++i) {
             String line = csvLines.get(i);
             for (int j = 0; j < line.length(); ++j) {
-                if (line.charAt(j) == ',') {
+
+                if(line.charAt(j) == '"'){
+                    inQuotes = !inQuotes;
+                }
+
+                if (line.charAt(j) == ',' && !inQuotes) {
                     line = line.substring(0, j) + " | " + line.substring(j + 1);
                 }
             }
