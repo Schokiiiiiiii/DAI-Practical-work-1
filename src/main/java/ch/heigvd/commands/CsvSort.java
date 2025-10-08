@@ -43,7 +43,15 @@ public class CsvSort implements Callable<Integer> {
             return 1;
         }
 
-        // ArrayList<ArrayList<String>> data = new ArrayList<>();
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+
+        retrieveData(data);
+        for (ArrayList<String> datum : data) {
+            for (String s : datum) {
+                System.out.print(s);
+            }
+            System.out.println();
+        }
 
         System.out.println("Here is the column : " + columnName);
         System.out.println("Here is the index  : " + idx);
@@ -65,7 +73,6 @@ public class CsvSort implements Callable<Integer> {
             int idx = 0;
 
             String line = br.readLine();
-            System.out.println("Line: " + line + '\n');
 
             int sep;
             while ((sep = line.indexOf(SEPARATOR)) != -1) {
@@ -77,13 +84,37 @@ public class CsvSort implements Callable<Integer> {
                 line = line.substring(sep + 1);
             }
 
-            if (line.equals(columnName))
-                return idx;
+
+            if (line.equals(columnName)) return idx; // check last word
 
         } catch (IOException e) {
             System.out.println("Error with the csv input file: " + e.getMessage());
         }
 
-        return -1;
+        return 0;
+    }
+
+    private void retrieveData(ArrayList<ArrayList<String>> data) {
+
+        try (Reader reader = new FileReader(parent.getCSVFilename());
+             BufferedReader br = new BufferedReader(reader)) {
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                data.add(new ArrayList<>());
+
+                int sep;
+                while ((sep = line.indexOf(SEPARATOR)) != -1) {
+
+                    String word = line.substring(0, sep);
+                    data.getLast().add(word);
+                    line = line.substring(sep + 1);
+                }
+                data.getLast().add(line); // add last word
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error with the csv input file: " + e.getMessage());
+        }
     }
 }
