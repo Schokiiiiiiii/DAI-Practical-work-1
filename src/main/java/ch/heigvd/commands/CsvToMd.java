@@ -13,7 +13,11 @@ import java.util.concurrent.Callable;
 public class CsvToMd implements Callable<Integer> {
     @CommandLine.ParentCommand protected Main parent;
 
-    @CommandLine.Option(names = {"-o", "--output"}, description = "The output filename. By default, it will be the input filename.")
+    @CommandLine.Option(
+            names = {"-o", "--output"},
+            paramLabel = "MD_FILE",
+            description = "The output filename. By default, it will be the input filename."
+    )
     protected String outputFilename;
 
     @Override
@@ -25,6 +29,7 @@ public class CsvToMd implements Callable<Integer> {
     }
 
     private static final String END_OF_LINE = "\n";
+
     private final ArrayList<String> csvLines = new ArrayList<>();
     private final ArrayList<String> mdLines = new ArrayList<>();
 
@@ -60,11 +65,13 @@ public class CsvToMd implements Callable<Integer> {
     private int buildMdHeader(){
         int nbColumns = 0;
         boolean inQuotes = false;
+
         String header = csvLines.getFirst();
         for(int i = 0; i < header.length(); ++i){
             if(header.charAt(i) == '"'){
                 inQuotes = !inQuotes;
             }
+
             if(header.charAt(i) == ',' && !inQuotes){
                 header = header.substring(0, i) + " | " + header.substring(i+1);
                 ++nbColumns;
