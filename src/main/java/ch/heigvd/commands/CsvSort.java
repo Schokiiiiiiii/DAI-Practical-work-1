@@ -7,7 +7,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.Vector;
+import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
 @CommandLine.Command(name = "csvsort", description = "Sorts a CSV file based on a column")
@@ -43,10 +43,10 @@ public class CsvSort implements Callable<Integer> {
             return 1;
         }
 
-        Vector<Vector<String>> data = new Vector<>();
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
 
         retrieveData(data);
-        for (Vector<String> datum : data) {
+        for (ArrayList<String> datum : data) {
             for (String s : datum) {
                 System.out.print(s);
             }
@@ -94,14 +94,14 @@ public class CsvSort implements Callable<Integer> {
         return 0;
     }
 
-    private void retrieveData(Vector<Vector<String>> data) {
+    private void retrieveData(ArrayList<ArrayList<String>> data) {
 
         try (Reader reader = new FileReader(parent.getCSVFilename());
              BufferedReader br = new BufferedReader(reader)) {
 
             String line;
             while ((line = br.readLine()) != null) {
-                data.add(new Vector<>());
+                data.add(new ArrayList<>());
 
                 int sep;
                 while ((sep = line.indexOf(SEPARATOR)) != -1) {
