@@ -20,8 +20,6 @@ public class CsvToMd implements Callable<Integer> {
     )
     protected String outputFilename;
 
-    protected char MD_SEPARATOR = '|';
-
     private char csvSeparator;
 
     @Override
@@ -35,10 +33,16 @@ public class CsvToMd implements Callable<Integer> {
     }
 
     private static final String END_OF_LINE = "\n";
+    protected char MD_SEPARATOR = '|';
+
 
     private final ArrayList<String> csvLines = new ArrayList<>();
     private final ArrayList<String> mdLines = new ArrayList<>();
 
+    /**
+     * Import a file by reading it and storing the data in an ArrayList.
+     * @param filename Path to the input file
+     */
     private void importCSV(String filename){
 
         try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filename), StandardCharsets.UTF_8))){
@@ -51,6 +55,10 @@ public class CsvToMd implements Callable<Integer> {
         }
     }
 
+    /**
+     * Export a .md file
+     * @param filename Path to the location of the destination file.
+     */
     private void exportMD(String filename){
 
         try(BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))){
@@ -62,12 +70,19 @@ public class CsvToMd implements Callable<Integer> {
         }
     }
 
+    /**
+     * Convert the imported CSV lines in a Markdown table, build a header, a separator and the body of the file.
+     */
     private void convertCSVtoMD(){
         int nbColumns = buildMdHeader();
         buildMdHeaderSeparator(nbColumns);
         buildMdBody(nbColumns);
     }
 
+    /**
+     * Build the header of the file from the first line of the CSV data.
+     * @return The number of columns.
+     */
     private int buildMdHeader(){
         int nbColumns = 0;
         boolean inQuotes = false;
@@ -79,6 +94,7 @@ public class CsvToMd implements Callable<Integer> {
         for(int i = 0; i < header.length(); ++i){
             char c = header.charAt(i);
 
+            // Ignore CSV separators inside quotes
             if(c == '"') inQuotes = !inQuotes;
             if(c == csvSeparator && !inQuotes){
                 sb.append(MD_SEPARATOR);
@@ -94,11 +110,19 @@ public class CsvToMd implements Callable<Integer> {
         return nbColumns + 1;
     }
 
+    /**
+     * Build the line that separates the metadata line from the body.
+     * @param nbColumns Number of columns to consider when building the separator.
+     */
     private void buildMdHeaderSeparator(int nbColumns){
         String headerSeparator = "|---".repeat(nbColumns) + "|" + END_OF_LINE;
         mdLines.add(headerSeparator);
     }
 
+    /**
+     * Builds the body of the table.
+     * @param nbColumns The number of columns to consider in the table.
+     */
     private void buildMdBody(int nbColumns){
         boolean inQuotes = false;
 
@@ -112,12 +136,15 @@ public class CsvToMd implements Callable<Integer> {
 
             for (int j = 0; j < line.length(); ++j) {
                 char c = line.charAt(j);
+
+                // Ignore CSV separators inside quotes
                 if(c == '"'){
                     inQuotes = !inQuotes;
                 }
 
                 if (c == csvSeparator && !inQuotes) {
                     ++currentColumn;
+                    // Avoid adding more data to the table if there are more columns in the current line
                     if (currentColumn > nbColumns)
                         break;
                     sb.append(MD_SEPARATOR);
