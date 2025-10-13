@@ -6,6 +6,10 @@
 - [Overview](#overview)
 - [Features](#features)
 - [Download the project](#download-the-project)
+- [Usage](#usage)
+    - [csvsort](#csvsort)
+    - [csvtomd](#csvtomd)
+- [Contribute](#contribute)
 
 ## Authors
 
@@ -28,7 +32,7 @@ This is the repository for the first practical work in the DAI course. The goal 
 2. In IntelliJ IDEA, create a new project from existing sources and selecte your local repository.
     - Select `Import project from external model then select Maven` 
 
-## Use
+## Usage
 
 ### Compile the application using the maven wrapper
 
@@ -68,7 +72,7 @@ Specify a CSV separator (',', ';', '\t', '|', ...) :
 java -jar target/DAI-Practical-work-1-1.0-SNAPSHOT.jar -i=PATH_TO_CSV_FILE -s='SEPARATOR'
 ```
 
-## Contribute to the project
+## Contribute
 
 We only merge signed commits. [GitHub signed commits tutorial](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits)
 
