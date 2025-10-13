@@ -1,12 +1,25 @@
 # DAI-Practical-work-1
 
-Authors : Fabien Léger and Samuel Dos Santos <br>
-Idea : Utilitary for CSV formatted data files <br>
-Repository : https://github.com/Schokiiiiiiii/DAI-Practical-work-1 
+## Table of contents
 
-## Context
+- [Authors](#authors)
+- [Overview](#overview)
+- [Features](#features)
+- [Download the project](#download-the-project)
 
-This is the repository for the first practical work in the DAI course. The goal of the project is to create a small CSV utilitary tool that can sort the data inside a CSV file and convert CSV files to Markdown tables. The project uses [picocli](https://picocli.info/) to manage the different command line options.
+## Authors
+
+- [Fabien Léger](https://github.com/Schokiiiiiiii)
+- [Samuel Dos Santos]([https://github.com/Schokiiiiiiii](https://github.com/Samurai-05))
+
+## Overview
+
+This is the repository for the first practical work in the DAI course. The goal of the project is to create a small CSV utilitary for working with CSV files. It allows users to sort CSV data and convert CSV files into Markdown tables.
+
+## Features
+
+- Sort CSV data by columns.
+- Convert CSV files to Markdown tables.
 
 ## Download the project
 
@@ -39,7 +52,7 @@ Run the following command : `./mvnw dependency:go-offline clean compile package`
 
 Simply convert a CSV file to a Markdown table :
 
-```
+``` bash
 java -jar target/DAI-Practical-work-1-1.0-SNAPSHOT.jar -i=PATH_TO_CSV_FILE csvtomd
 ```
 
@@ -58,3 +71,5 @@ java -jar target/DAI-Practical-work-1-1.0-SNAPSHOT.jar -i=PATH_TO_CSV_FILE -s='S
 ## Contribute to the project
 
 We only merge signed commits. [GitHub signed commits tutorial](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits)
+
+(GitHub Copilot was used for layout suggestions)
