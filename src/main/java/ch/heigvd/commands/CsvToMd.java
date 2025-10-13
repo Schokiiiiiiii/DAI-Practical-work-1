@@ -144,6 +144,7 @@ public class CsvToMd implements Callable<Integer> {
 
                 if (c == csvSeparator && !inQuotes) {
                     ++currentColumn;
+                    // Avoid adding more data to the table if there are more columns in the current line
                     if (currentColumn > nbColumns)
                         break;
                     sb.append(MD_SEPARATOR);
