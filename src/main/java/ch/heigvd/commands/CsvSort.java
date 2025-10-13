@@ -103,7 +103,7 @@ public class CsvSort implements Callable<Integer> {
             System.out.println("Error with the csv input file: " + e.getMessage());
         }
 
-        return 0;
+        return -1;
     }
 
     /**
