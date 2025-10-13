@@ -14,7 +14,7 @@
 ## Authors
 
 - [Fabien Léger](https://github.com/Schokiiiiiiii)
-- [Samuel Dos Santos]([https://github.com/Schokiiiiiiii](https://github.com/Samurai-05))
+- [Samuel Dos Santos](https://github.com/Samurai-05)
 
 ## Overview
 
