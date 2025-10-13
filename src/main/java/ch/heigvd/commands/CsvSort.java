@@ -1,3 +1,11 @@
+/*********************************************************************************************************************
+ * @filename    : CsvSort.java
+ * @authors     : Fabien Léger and Samuel Dos Santos
+ * @version     : 1.0.0
+ * @updated     : 13.10.2025
+ * @description : picocli subcommand to sort a CSV file based on a column.
+ *********************************************************************************************************************/
+
 package ch.heigvd.commands;
 
 import ch.heigvd.Main;
@@ -11,18 +19,18 @@ import java.util.concurrent.Callable;
 @CommandLine.Command(name = "csvsort", description = "Sorts a CSV file based on a column")
 public class CsvSort implements Callable<Integer> {
 
-    @CommandLine.ParentCommand protected Main parent;
+    @CommandLine.ParentCommand private Main parent;
 
     @CommandLine.Option(
             names = {"-c", "--column"},
             description = "The header of the column to sort.",
             required = true)
-    protected String columnName;
+    private String columnName;
 
     @CommandLine.Option(
             names = {"-o", "--output"},
             description = "The output filename. By default, it will be the input filename.")
-    protected String outputFilename;
+    private String outputFilename;
 
     private char separator;
 
@@ -32,10 +40,10 @@ public class CsvSort implements Callable<Integer> {
      */
     @Override
     public Integer call() {
-        separator = parent.getCSVSeparator();
+        separator = parent.getCsvSeparator();
 
         // if no output filename -> same as input filename
-        if (outputFilename == null) outputFilename = parent.getCSVFilename();
+        if (outputFilename == null) outputFilename = parent.getInputFilename();
 
         // search for column name's index
         int idx = findColumnIndex();
@@ -60,14 +68,14 @@ public class CsvSort implements Callable<Integer> {
 
     /**
      * finds the index for a given string column
-     * @return  index found or -1 if not found
+     * @return index found or -1 if not found
      */
     // Yes, we could first turn the CSV into a 2D array and then look for column index, but it's both better to train
     // IOs that way and also eliminates huge file storage when column name is wrong
     private int findColumnIndex() {
 
         // read from file
-        try (Reader reader = new FileReader(parent.getCSVFilename());
+        try (Reader reader = new FileReader(parent.getInputFilename());
              BufferedReader br = new BufferedReader(reader)) {
 
             // initialize index to find
@@ -108,12 +116,12 @@ public class CsvSort implements Callable<Integer> {
 
     /**
      * puts the data inside a 2d ArrayList given in parameter
-     * @param data ArrayList inside which to put the data
+     * @param data 2d ArrayList inside which to put the data
      */
     private void retrieveData(ArrayList<ArrayList<String>> data) {
 
         // read from file
-        try (Reader reader = new FileReader(parent.getCSVFilename());
+        try (Reader reader = new FileReader(parent.getInputFilename());
              BufferedReader br = new BufferedReader(reader)) {
 
             // loop over each line

@@ -1,8 +1,8 @@
 /*********************************************************************************************************************
  * @filename    : Main.java
  * @authors     : Fabien Léger and Samuel Dos Santos
- * @version     : 0.1.0
- * @updated on  : 24.09.2025
+ * @version     : 1.0.0
+ * @updated     : 13.10.2025
  * @description : offers a CLI to interact with a CSV file and transform it.
  *********************************************************************************************************************/
 
@@ -32,7 +32,7 @@ public class Main {
             required = true,
             description = "The name of the input .csv file"
     )
-    protected String filename;
+    private String inputFilename;
 
     @CommandLine.Option(
             names = {"-s", "--separator"},
@@ -40,10 +40,11 @@ public class Main {
             description = "The separator character of the CSV file.",
             defaultValue = ","
     )
-    protected char csvSeparator;
+    private char csvSeparator;
 
-    public String getCSVFilename() { return filename; }
-    public char getCSVSeparator() { return csvSeparator; }
+
+    public String getInputFilename() { return inputFilename; }
+    public char getCsvSeparator()    { return csvSeparator; }
 
     /**
      * main that starts the right command following arguments given
@@ -53,8 +54,7 @@ public class Main {
 
         // get filename
         String jarFilename =
-                new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath())
-                        .getName();
+                new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getName();
 
         // do the command
         int exitCode = new CommandLine(new Main()).setCommandName(jarFilename).execute(args);

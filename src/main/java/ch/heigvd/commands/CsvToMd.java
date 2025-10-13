@@ -1,3 +1,11 @@
+/*********************************************************************************************************************
+ * @filename    : CsvToMd.java
+ * @authors     : Fabien Léger and Samuel Dos Santos
+ * @version     : 1.0.0
+ * @updated     : 13.10.2025
+ * @description : picocli subcommand to transform a CSV file into a MD table inside a MD file
+ *********************************************************************************************************************/
+
 package ch.heigvd.commands;
 
 import ch.heigvd.Main;
@@ -11,33 +19,33 @@ import java.util.concurrent.Callable;
 
 @Command(name = "csvtomd", description = "Convert a CSV file to a MARKDOWN table")
 public class CsvToMd implements Callable<Integer> {
-    @CommandLine.ParentCommand protected Main parent;
+    @CommandLine.ParentCommand private Main parent;
 
     @CommandLine.Option(
             names = {"-o", "--output"},
             paramLabel = "MD_FILE",
             description = "The output filename. By default, it will be the input filename."
     )
-    protected String outputFilename;
+    private String outputFilename;
 
     private char csvSeparator;
 
     @Override
     public Integer call() {
-        csvSeparator = parent.getCSVSeparator();
+        csvSeparator = parent.getCsvSeparator();
 
-        importCSV(parent.getCSVFilename());
+        importCSV(parent.getInputFilename());
         convertCSVtoMD();
-        exportMD(outputFilename == null ? parent.getCSVFilename() + ".md" : outputFilename);
+        exportMD(outputFilename == null ? parent.getInputFilename() + ".md" : outputFilename);
         return 0;
     }
 
-    private static final String END_OF_LINE = "\n";
-    protected char MD_SEPARATOR = '|';
+    private static final char END_OF_LINE = '\n';
+    private final char MD_SEPARATOR       = '|';
 
 
     private final ArrayList<String> csvLines = new ArrayList<>();
-    private final ArrayList<String> mdLines = new ArrayList<>();
+    private final ArrayList<String> mdLines  = new ArrayList<>();
 
     /**
      * Import a file by reading it and storing the data in an ArrayList.
