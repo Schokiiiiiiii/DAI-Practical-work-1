@@ -56,19 +56,19 @@ Run the following command : `./mvnw dependency:go-offline clean compile package`
 
 Simply convert a CSV file to a Markdown table :
 
-``` bash
+```bash
 java -jar target/DAI-Practical-work-1-1.0-SNAPSHOT.jar -i=PATH_TO_CSV_FILE csvtomd
 ```
 
 Specify an output file name : 
 
-```
+```bash
 java -jar target/DAI-Practical-work-1-1.0-SNAPSHOT.jar -i=PATH_TO_CSV_FILE.csv csvtomd -o=PATH_TO_OUTPUT_FILE.md
 ```
 
 Specify a CSV separator (',', ';', '\t', '|', ...) :
 
-```
+```bash
 java -jar target/DAI-Practical-work-1-1.0-SNAPSHOT.jar -i=PATH_TO_CSV_FILE -s='SEPARATOR'
 ```
 
