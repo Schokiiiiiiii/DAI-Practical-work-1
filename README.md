@@ -39,7 +39,7 @@ This is the repository for the first practical work in the DAI course. The goal 
 #### IntelliJ IDEA
 
 On the top right corner, run the `Package Application as .jar file` configuration.
-This will package the application into a single .jar file inside of the `target/` forlder.
+This will package the application into a single `.jar` file inside of the `target/` forlder.
 
 In case of an error, try running the `mvn install` command.
 
@@ -70,6 +70,15 @@ Specify a CSV separator (',', ';', '\t', '|', ...) :
 
 ```bash
 java -jar target/DAI-Practical-work-1-1.0-SNAPSHOT.jar -i=PATH_TO_CSV_FILE -s='SEPARATOR'
+```
+
+**Output Markdown**
+
+```
+| Name   | Age |
+|--------|-----|
+| Patrik | 30  |
+| Alicia | 25  |
 ```
 
 ## Contribute
