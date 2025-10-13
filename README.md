@@ -69,7 +69,7 @@ java -jar target/DAI-Practical-work-1-1.0-SNAPSHOT.jar -i=PATH_TO_CSV_FILE csvso
 Specify an output file :
 
 ```bash
-java -jar target/DAI-Practical-work-1-1.0-SNAPSHOT.jar -i=PATH_TO_CSV_FILE csvsort -c=COLUMN_TO_SORT  o=PATH_TO_OUTPUT_FILE.md
+java -jar target/DAI-Practical-work-1-1.0-SNAPSHOT.jar -i=PATH_TO_CSV_FILE csvsort -c=COLUMN_TO_SORT  o=PATH_TO_OUTPUT_FILE.csv
 ```
 
 Specify a CSV separator (',', ';', '\t', '|', ...) :
