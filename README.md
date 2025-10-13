@@ -51,8 +51,40 @@ Run the following command : `./mvnw dependency:go-offline clean compile package`
 
 *Example files are provided inside the `data/` folder.*
 
+**Example**
+```
+Name,Age
+Alice,30
+Bob,25
+```
+
 #### csvsort
 
+Sort a CSV file : 
+
+```bash
+java -jar target/DAI-Practical-work-1-1.0-SNAPSHOT.jar -i=PATH_TO_CSV_FILE csvsort -c=COLUMN_TO_SORT 
+```
+
+Specify an output file :
+
+```bash
+java -jar target/DAI-Practical-work-1-1.0-SNAPSHOT.jar -i=PATH_TO_CSV_FILE csvsort -c=COLUMN_TO_SORT  o=PATH_TO_OUTPUT_FILE.md
+```
+
+Specify a CSV separator (',', ';', '\t', '|', ...) :
+
+```bash
+java -jar target/DAI-Practical-work-1-1.0-SNAPSHOT.jar -i=PATH_TO_CSV_FILE csvsort -c=COLUMN_TO_SORT  -s='SEPARATOR'
+```
+
+**Example output for column Age**
+
+```
+Name,Age
+Bob,25
+Alice,30
+```
 
 #### csvtomd
 
@@ -62,7 +94,7 @@ Simply convert a CSV file to a Markdown table :
 java -jar target/DAI-Practical-work-1-1.0-SNAPSHOT.jar -i=PATH_TO_CSV_FILE csvtomd
 ```
 
-Specify an output file name : 
+Specify an output file : 
 
 ```bash
 java -jar target/DAI-Practical-work-1-1.0-SNAPSHOT.jar -i=PATH_TO_CSV_FILE.csv csvtomd -o=PATH_TO_OUTPUT_FILE.md
