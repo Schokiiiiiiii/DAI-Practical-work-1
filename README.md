@@ -49,6 +49,8 @@ Run the following command : `./mvnw dependency:go-offline clean compile package`
 
 ### Run the command
 
+*Example files are provided inside the `data/` folder.*
+
 #### csvsort
 
 
