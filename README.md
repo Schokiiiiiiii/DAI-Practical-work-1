@@ -38,8 +38,10 @@ This is the repository for the first practical work in the DAI course. The goal 
 
 #### IntelliJ IDEA
 
-On the top right corner, run the `Package Application as .jar file` configuration.
+On the top right corner, run the Maven wrapper `Package Application as .jar file` configuration.
 This will package the application into a single `.jar` file inside of the `target/` forlder.
+
+Make sure that the Maven wrapper is selected in your IDE's configuration.
 
 In case of an error, try running the `mvn install` command.
 
@@ -78,7 +80,7 @@ Specify a CSV separator ('`,`', '`;`', '`\t`', '`|`', ...) :
 java -jar target/DAI-Practical-work-1-1.0-SNAPSHOT.jar -i=PATH_TO_CSV_FILE csvsort -c=COLUMN_TO_SORT  -s='SEPARATOR'
 ```
 
-**Example output for column Age**
+**Example output for the column Age**
 
 ```
 Name,Age
