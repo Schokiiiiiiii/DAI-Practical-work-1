@@ -65,19 +65,19 @@ Bob,25
 Sort a CSV file : 
 
 ```bash
-java -jar target/DAI-Practical-work-1-1.0-SNAPSHOT.jar -i=PATH_TO_CSV_FILE csvsort -c=COLUMN_TO_SORT 
+java -jar target/DAI-Practical-work-1-1.0-SNAPSHOT.jar -i=PATH_TO_CSV_FILE csvsort -c=COLUMN_TO_SORT
 ```
 
 Specify an output file :
 
 ```bash
-java -jar target/DAI-Practical-work-1-1.0-SNAPSHOT.jar -i=PATH_TO_CSV_FILE csvsort -c=COLUMN_TO_SORT  o=PATH_TO_OUTPUT_FILE.csv
+java -jar target/DAI-Practical-work-1-1.0-SNAPSHOT.jar -i=PATH_TO_CSV_FILE csvsort -c=COLUMN_TO_SORT -o=PATH_TO_OUTPUT_FILE.csv
 ```
 
 Specify a CSV separator ('`,`', '`;`', '`\t`', '`|`', ...) :
 
 ```bash
-java -jar target/DAI-Practical-work-1-1.0-SNAPSHOT.jar -i=PATH_TO_CSV_FILE csvsort -c=COLUMN_TO_SORT  -s='SEPARATOR'
+java -jar target/DAI-Practical-work-1-1.0-SNAPSHOT.jar -i=PATH_TO_CSV_FILE -s='SEPARATOR' csvsort -c=COLUMN_TO_SORT
 ```
 
 **Example output for the column Age**
@@ -105,7 +105,7 @@ java -jar target/DAI-Practical-work-1-1.0-SNAPSHOT.jar -i=PATH_TO_CSV_FILE.csv c
 Specify a CSV separator (',', ';', '\t', '|', ...) :
 
 ```bash
-java -jar target/DAI-Practical-work-1-1.0-SNAPSHOT.jar -i=PATH_TO_CSV_FILE -s='SEPARATOR'
+java -jar target/DAI-Practical-work-1-1.0-SNAPSHOT.jar -i=PATH_TO_CSV_FILE -s='SEPARATOR' csvtomd
 ```
 
 **Output Markdown**
